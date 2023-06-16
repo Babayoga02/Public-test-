@@ -1,0 +1,32 @@
+import requests
+
+# Ваш API-ключ OpenWeatherMap
+api_key = "YOUR_API_KEY_HERE"
+
+# Функция для получения погоды по названию города
+def get_weather(city):
+    # Создаем URL-адрес запроса
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+
+    # Отправляем GET-запрос и получаем ответ
+    response = requests.get(url)
+
+    # Извлекаем данные из ответа
+    data = response.json()
+
+    # Проверяем, что запрос успешен
+    if data["cod"] == 200:
+        # Извлекаем данные о погоде
+        weather = data["weather"][0]["description"]
+        temp = data["main"]["temp"]
+        feels_like = data["main"]["feels_like"]
+        humidity = data["main"]["humidity"]
+
+        # Формируем сообщение о погоде
+        message = f"Сейчас в городе {city} {weather}. Температура {temp}°C, ощущается как {feels_like}°C. Влажность {humidity}%."
+    else:
+        # Если запрос не удался, формируем сообщение об ошибке
+        message = f"Произошла ошибка при получении погоды для города {city}."
+
+    # Возвращаем сообщение о погоде
+    return message
