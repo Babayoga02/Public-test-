@@ -1,0 +1,29 @@
+вот пример кода на Python, который позволяет запустить чат-бота на платформе Telegram:
+
+import telebot
+
+# Создаем экземпляр бота
+
+bot = telebot.TeleBot("YOUR_TOKEN_HERE")
+
+# Обработчик команды /start
+
+@bot.message_handler(commands=['start'])
+
+def send_welcome(message):
+
+    bot.reply_to(message, "Привет! Я чат-бот")
+
+# Обработчик текстовых сообщений
+
+@bot.message_handler(func=lambda message: True)
+
+def echo_all(message):
+
+    bot.reply_to(message, message.text)
+
+# Запускаем бота
+
+bot.polling()
+
+Не забудьте заменить YOUR_TOKEN_HERE на свой токен, который можно получить у BotFather в Telegram. Этот код создает бота, который будет отвечать на все текстовые сообщения, отправленные ему пользователями. Обработчик команды /start отправляет приветственное сообщение.
